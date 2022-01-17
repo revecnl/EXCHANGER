@@ -48,6 +48,35 @@
   background-color: #3e8e41;
 }
 
+
+body{
+  width: 100%;
+}
+
+.input-area{
+  text-align: right;
+  margin-right: 10px;
+}
+
+
+.exchage-box-top{
+  border: 1px solid green;
+  width: 200px;
+  margin: 0 auto;
+  margin-top: 15%;
+}
+
+.exchage-box-bot{
+  border: 1px solid green;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.equal{
+  text-align: center;
+}
+
+/*  
 .exchage-box-top{
     border: 1px solid black;
     width: 200px;
@@ -55,7 +84,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,100%);
+    transform: translate(-50%,-150%);
 
 }
 
@@ -66,7 +95,7 @@
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%,-150%);
+    transform: translate(-50%,100%);
 }
 
 .input-area{
@@ -86,3 +115,4 @@ h1{
     left: 50%;
     transform: translate(-50%,-50%);
 }
+*/
