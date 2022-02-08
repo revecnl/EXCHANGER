@@ -9,25 +9,28 @@
 
 //객체 생성 객체 내부에 여러 객체 생성가능
 let currencyRatio = {
-    USD: {
-        KRW: 1182.35,
+    VND: {
+        USD: 0.000043,
+        KRW: 0.051,
+        VND: 1,
+        unit: "동",
+        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/2560px-Flag_of_Vietnam.svg.png",
+      },
+      USD: {
         USD: 1,
+        KRW: 1182.35,
         VND: 23235.5,
         unit: "달러",
-    },
-    KRW: {
-        KRW: 1,
+        img: "https://cdn-icons-png.flaticon.com/512/555/555526.png",
+      },
+      KRW: {
         USD: 0.00085,
+        KRW: 1,
         VND: 19.47,
-        unit: "원"
-    },
-    VND: {
-        KRW: 0.051,
-        USD: 0.000043,
-        VND: 1,
-        unit: "동"
-    }
-}
+        unit: "원",
+        img: "https://cdn.countryflags.com/thumbs/south-korea/flag-400.png",
+      },
+    };
 
 //console.log(currencyRatio["VND"].unit);
 
@@ -39,6 +42,10 @@ let currencyRatio = {
 //저장용 변수 생성
 let fromCurrency = "USD"
 let toCurrency = "USD"
+let toButton = document.getElementById("to-btn");
+let fromButton = document.getElementById("from-btn");
+var unitWords = ["", "만", "억", "조", "경"];
+var splitUnit = 10000;
 
 document.querySelectorAll("#from-currency-list a")
     .forEach((menu) => menu.addEventListener("click", function () {
@@ -46,7 +53,6 @@ document.querySelectorAll("#from-currency-list a")
         document.getElementById("from-btn").textContent = this.textContent;
         //3.선택된 값을 저장한다. 변수에 저장
         fromCurrency = this.textContent;
-        convert()
     }));
 
 document.querySelectorAll("#to-currency-list a")
@@ -59,18 +65,45 @@ document.querySelectorAll("#to-currency-list a")
 
 //환전 값이 보인다.
 //키를 입력하는 순간
-function convert() {
-    //환전
-    //얼마를? 무슨돈을 어디로?
-    // 돈 * 환율 = 바꿀금액
-    let amount = document.getElementById("from-input").value
-    //value = input창에 있는 걸 들고 올 수 있다.
-
-    //환전 로직
+function convert(type) {
+   console.log("here");
+    let amount = 0;
+    if(type == "from"){ 
+    amount = document.getElementById("from-input").value;
     let convertedAmount = amount * currencyRatio[fromCurrency][toCurrency]
-    //따라 바뀌는 로직
     document.getElementById("to-input").value = convertedAmount
+    transkor(amount, convertedAmount);
+    } else {
+    amount = document.getElementById("to-input").value;
+    let convertedAmount = amount * currencyRatio[toCurrency][fromCurrency]
+    document.getElementById("from-input").value = convertedAmount;
+    transkor(convertedAmount, amount);   
+        }
+    }
+function transkor(from, to) {
+    document.getElementById("fromunitkor").textContent = 
+    readkor(from) + currencyRatio[fromCurrency].unit;
+    document.getElementById("tounitkor").textContent = 
+    readkor(to) + currencyRatio[toCurrency].unit;
 }
+
+function readkor(num) {
+    let resultString = "";
+    let resultArray = [];
+    for (let i = 0; i < unitWords.length; i++) {
+      let unitResult =
+        (num % Math.pow(splitUnit, i + 1)) / Math.pow(splitUnit, i);
+      unitResult = Math.floor(unitResult);
+      if (unitResult > 0) {
+        resultArray[i] = unitResult;
+      }
+    }
+    for (let i = 0; i < resultArray.length; i++) {
+      if (!resultArray[i]) continue;
+      resultString = String(resultArray[i]) + unitWords[i] + resultString;
+    }
+    return resultString;
+  }
 
 
 //1. 드랍다운 리스트 값이 바뀔 때 -> click 이벤트
@@ -79,3 +112,12 @@ function convert() {
 
 //숙제
 //각 돈의 단위 변경 로직
+
+//document.querySelectorAll("#from-currency-list").forEach(function(item){
+//    item.addEventListener("click", function (){
+//        fromCurrency = this.id;
+//        fromButton.innerHTML = `<a class=class="dropdown-content-inner" src="${currencyRatio[toCurrency].a}"/>${toCurrency}`;
+//        convert("from");
+//    });
+//});
+
