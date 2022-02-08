@@ -14,21 +14,18 @@ let currencyRatio = {
         KRW: 0.051,
         VND: 1,
         unit: "동",
-        img: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/Flag_of_Vietnam.svg/2560px-Flag_of_Vietnam.svg.png",
       },
       USD: {
         USD: 1,
         KRW: 1182.35,
         VND: 23235.5,
         unit: "달러",
-        img: "https://cdn-icons-png.flaticon.com/512/555/555526.png",
       },
       KRW: {
         USD: 0.00085,
         KRW: 1,
         VND: 19.47,
         unit: "원",
-        img: "https://cdn.countryflags.com/thumbs/south-korea/flag-400.png",
       },
     };
 
@@ -53,13 +50,14 @@ document.querySelectorAll("#from-currency-list a")
         document.getElementById("from-btn").textContent = this.textContent;
         //3.선택된 값을 저장한다. 변수에 저장
         fromCurrency = this.textContent;
+        convert("form")
     }));
 
 document.querySelectorAll("#to-currency-list a")
     .forEach(menu => menu.addEventListener("click", function () {
         document.getElementById("to-btn").textContent = this.textContent;
         toCurrency = this.textContent;
-        convert()
+        convert("form")
     }));
 
 
